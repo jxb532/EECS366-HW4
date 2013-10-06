@@ -13,6 +13,14 @@ Vertex::Vertex()
 	h = 1;
 }
 
+Vertex::Vertex(float _x, float _y, float _z)
+{
+	x = _x;
+	y = _y;
+	z = _z;
+	h = sqrtf((x * x) + (y * y) + (z * z));
+}
+
 void Vertex::Normalize()
 {
 	x = x/h;
@@ -82,6 +90,12 @@ void Object::Load(char* file, float s, float rx, float ry, float rz,
 			pVertexList[CurrentVertex].z = c;
 
 			//ADD YOUR CODE HERE :Track maximum and minimum coordinates for use in bounding boxes
+			MaximumX = a > MaximumX ? a : MaximumX;
+			MinimumX = a < MinimumX ? a : MinimumX;
+			MaximumY = b > MaximumY ? b : MaximumY;
+			MinimumY = b < MinimumY ? b : MinimumY;
+			MaximumZ = c > MaximumZ ? c : MaximumZ;
+			MinimumZ = c < MinimumZ ? c : MinimumZ;
 
 			CurrentVertex++;
 		}
@@ -96,7 +110,14 @@ void Object::Load(char* file, float s, float rx, float ry, float rz,
 	}
 
 	//ADD YOUR CODE HERE: Initialize the bounding box vertices
-
+	pBoundingBox[0] = *new Vertex(MaximumX, MaximumY, MaximumZ);
+	pBoundingBox[1] = *new Vertex(MinimumX, MaximumY, MaximumZ);
+	pBoundingBox[2] = *new Vertex(MinimumX, MinimumY, MaximumZ);
+	pBoundingBox[3] = *new Vertex(MaximumX, MinimumY, MaximumZ);
+	pBoundingBox[4] = *new Vertex(MaximumX, MaximumY, MinimumZ);
+	pBoundingBox[5] = *new Vertex(MinimumX, MaximumY, MinimumZ);
+	pBoundingBox[6] = *new Vertex(MinimumX, MinimumY, MinimumZ);
+	pBoundingBox[7] = *new Vertex(MaximumX, MinimumY, MinimumZ);
 	
 	// Apply the initial transformations in order
 	LocalScale(s);
