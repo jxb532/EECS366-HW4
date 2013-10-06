@@ -80,6 +80,8 @@ void Object::Load(char* file, float s, float rx, float ry, float rz,
 	// Load and create the faces and vertices
 	int CurrentVertex = 0, CurrentFace = 0;
 	float MinimumX, MaximumX, MinimumY, MaximumY, MinimumZ, MaximumZ;
+	MinimumX = MinimumY = MinimumZ = FLT_MAX;
+	MaximumX =  MaximumY = MaximumZ = FLT_MIN;
 	while(!feof(pObjectFile))
 	{
 		fscanf(pObjectFile, "%c %f %f %f\n", &DataType, &a, &b, &c);
@@ -362,20 +364,24 @@ void Camera::EnforceVectors()
 void Camera::Perspective()
 {
 	//ADD YOUR CODE HERE!!
-	 
+	// need to set ViewingMatrix[16] and ProjectionMatrix[16];
+	// I think we need to use ViewWidth, ViewHeight, FarPlane, NearPlane, ViewPlane
+
 }
 
 // Calculate the new orthographic projection matrix
 void Camera::Orthographic()
 {
 	//ADD YOUR CODE HERE!!
+	// need to set ViewingMatrix[16] and ProjectionMatrix[16];
+	// I think we need to use ViewWidth, ViewHeight, FarPlane, NearPlane, ViewPlane
+
 }
 
 // Calculate the new viewing transform matrix
 void Camera::LookAt()
 {
 	//ADD YOUR CODE HERE!!
-	
 
 }
 

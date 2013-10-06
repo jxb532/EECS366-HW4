@@ -78,9 +78,15 @@
   <ItemGroup>
     <ClCompile Include="Assignment4Template.cpp" />
     <ClCompile Include="Assignment4TemplateClasses.cpp" />
+    <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="MatrixMakers.cpp" />
+    <ClCompile Include="Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assignment4TemplateClasses.h" />
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="MatrixMakers.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

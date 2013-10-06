@@ -51,8 +51,8 @@ void DisplayFunc()
 
 	
 	//MAY WANT TO MODIFY THIS BASED ON ASSIGNMENT REQUIREMENTS
-	gluOrtho2D(-1.1,1.1,-1.1,1.1);
-	
+	//gluOrtho2D(-1.1,1.1,-1.1,1.1);
+	gluOrtho2D(-1.0,1.0,-1.0,1.0);
 
 	if(PerspectiveMode)
 	{
@@ -300,10 +300,25 @@ void KeyboardFunc(unsigned char key, int x, int y)
 	case 'P':
 	case 'p':
 		PerspectiveMode = !PerspectiveMode;
-		if(PerspectiveMode)
-			glutSetWindowTitle("Assignment 5 (Perspective)");
-		else
-			glutSetWindowTitle("Assignment 5 (Orthogonal)");
+		if(PerspectiveMode) {
+			glutSetWindowTitle("Assignment 4 (Perspective)");
+
+			// XXX need to implement this manually
+			//glMatrixMode(GL_PROJECTION);
+			//glLoadIdentity();
+			//gluPerspective(60,(GLdouble) 1.0, 0.01, 10000);
+			//glMatrixMode(GL_MODELVIEW);
+			//glLoadIdentity();
+		} else {
+			glutSetWindowTitle("Assignment 4 (Orthogonal)");
+
+			// XXX need to implement this manually
+			//glMatrixMode(GL_PROJECTION);
+			//glLoadIdentity();
+			//glOrtho(-2.5,2.5,-2.5,2.5,-10000,10000);
+			//glMatrixMode(GL_MODELVIEW);
+			//glLoadIdentity();
+		}
 		break;
 	case 'Q':
 	case 'q':

@@ -1,7 +1,7 @@
 /* Wes Rupert - wesrupert@outlook.com (wkr3)  *
  * Case Western Reserve University - EECS 366 */
 
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <stdio.h>
 #include <math.h>
 #include "Vector.h"
