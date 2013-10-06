@@ -23,6 +23,7 @@ Matrix::Matrix(int _rows, int _cols) {
 	}
 }
 
+// _matrix should be in COLUMN MAJOR
 Matrix::Matrix(int _rows, int _cols, float** _matrix) {
 	rows = _rows;
 	cols = _cols;

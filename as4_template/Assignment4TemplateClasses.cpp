@@ -4,6 +4,9 @@
 #include <math.h>
 #include <iostream>
 #include "Assignment4TemplateClasses.h"
+#include "MatrixMakers.h"
+#include "Matrix.h"
+#include "Vector.h"
 
 using namespace std;
 
@@ -366,7 +369,15 @@ void Camera::Perspective()
 	//ADD YOUR CODE HERE!!
 	// need to set ViewingMatrix[16] and ProjectionMatrix[16];
 	// I think we need to use ViewWidth, ViewHeight, FarPlane, NearPlane, ViewPlane
+	Matrix* perspective = perspectiveMatrix((NearPlane - FarPlane), - (ViewWidth / 2.0), (ViewWidth / 2), - (ViewHeight / 2), (ViewHeight / 2), NearPlane, FarPlane);
+	float* persArray = perspective->toArray();
 
+	for(int i = 0; i < 16; i++) {
+		ProjectionMatrix[i] = persArray[i];
+	}
+
+	delete perspective;
+	delete [] persArray;
 }
 
 // Calculate the new orthographic projection matrix
@@ -376,13 +387,37 @@ void Camera::Orthographic()
 	// need to set ViewingMatrix[16] and ProjectionMatrix[16];
 	// I think we need to use ViewWidth, ViewHeight, FarPlane, NearPlane, ViewPlane
 
+	Vector3* V = new Vector3(v.i, v.j, v.k);
+	Matrix* ortho = orthographicMatrix(V, - (ViewWidth / 2.0), (ViewWidth / 2), - (ViewHeight / 2), (ViewHeight / 2), NearPlane, FarPlane);
+
+	float* orthoArray = ortho->toArray();
+	
+	for (int i = 0; i < 16; i++) {
+		ProjectionMatrix[i] = orthoArray[i];
+	}
+
+	delete V, ortho;
+	delete [] orthoArray;
 }
 
 // Calculate the new viewing transform matrix
 void Camera::LookAt()
 {
 	//ADD YOUR CODE HERE!!
+	// hmm, might need to change this to use the existing u, n, v, and dot them with Position, instead of recalculating everything in viewMatrix()
+	Vector3* P = new Vector3(Position.x, Position.y, Position.z);
+	Vector3* N = new Vector3(n.i, n.j, n.k);
+	Vector3* V = new Vector3(v.i, v.j, v.k);
 
+	Matrix* view = viewMatrix(P, N, V);
+	float* viewArray = view->toArray();
+	
+	for (int i = 0; i < 16; i++) {
+		ViewingMatrix[i] = viewArray[i];
+	}
+
+	delete view, P, N, V;
+	delete [] viewArray;
 }
 
 // Transform a point with an arbitrary matrix

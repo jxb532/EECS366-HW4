@@ -85,6 +85,8 @@ Matrix* perspectiveMatrix(Vector3 prp, Vector3 vp, float s, float t, float d) {
 }
 
 Matrix* perspectiveMatrix(float d, float xMin, float xMax, float yMin, float yMax, float n, float f) {
+	
+	// FIXME? looking at my notes, I think 1a and 1b might be switched...
 	float per_1a[] = {
 		2 * d / (xMax - xMin), 0, 0, 0,
 		0, 2 * d / (yMax - yMin), 0, 0,
@@ -109,11 +111,40 @@ Matrix* perspectiveMatrix(float d, float xMin, float xMax, float yMin, float yMa
 	Matrix* t1 = new Matrix(4, 4, per_1a);
 	Matrix* t2 = new Matrix(4, 4, per_1b);
 	Matrix* t3 = new Matrix(4, 4, per_2);
+
+	// FIXME? Also, I think the order they are multiplied is per_2 * per_1b * per_1a
 	Matrix* t4 = *t2 * t3;
 	Matrix* t5 = *t1 * t4;
 	delete t1, t2, t3, t4;
+	delete [] per_1a, per_1b, per_2;
 
 	return t5;
+}
+
+Matrix* orthographicMatrix(Vector3* V_p, float xMin, float xMax, float yMin, float yMax, float n, float f) {
+	// equvalent to M_parallel in notes
+	float ortho_1[] = {
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		(-V_p->vector[0]/V_p->vector[2]), (-V_p->vector[1]/V_p->vector[2]), 1, 0,
+		0, 0, 0, 1
+	};
+
+	float ortho_2[] = {
+		2 / (xMax-xMin), 0, 0, 0,
+		0, 2 / (yMax - yMin), 0, 0,
+		0, 0, -2 / (f - n), 0,
+		-(xMax + xMin)/(xMax - xMin), -(yMax + yMin)/(yMax - yMin), -(f + n)/(f - n), 1
+	};
+
+	Matrix* t1 = new Matrix(4, 4, ortho_1);
+	Matrix* t2 = new Matrix(4, 4, ortho_2);
+
+	Matrix* t3 = *t2 * t1;
+	delete t1, t2;
+	delete [] ortho_1, ortho_2;
+	
+	return t3;
 }
 
 Matrix* viewportMatrix(float xvMin, float xvMax, float yvMin, float yvMax) {
