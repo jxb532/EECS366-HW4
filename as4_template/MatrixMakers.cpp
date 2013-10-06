@@ -116,7 +116,6 @@ Matrix* perspectiveMatrix(float d, float xMin, float xMax, float yMin, float yMa
 	Matrix* t4 = *t2 * t3;
 	Matrix* t5 = *t1 * t4;
 	delete t1, t2, t3, t4;
-	delete [] per_1a, per_1b, per_2;
 
 	return t5;
 }
@@ -142,7 +141,6 @@ Matrix* orthographicMatrix(Vector3* V_p, float xMin, float xMax, float yMin, flo
 
 	Matrix* t3 = *t2 * t1;
 	delete t1, t2;
-	delete [] ortho_1, ortho_2;
 	
 	return t3;
 }
