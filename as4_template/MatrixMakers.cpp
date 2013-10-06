@@ -113,8 +113,10 @@ Matrix* perspectiveMatrix(float d, float xMin, float xMax, float yMin, float yMa
 	Matrix* t3 = new Matrix(4, 4, per_2);
 
 	// FIXME? Also, I think the order they are multiplied is per_2 * per_1b * per_1a
-	Matrix* t4 = *t2 * t3;
-	Matrix* t5 = *t1 * t4;
+	//Matrix* t4 = *t2 * t3;
+	//Matrix* t5 = *t1 * t4;
+	Matrix* t4 = *t1 * t2;
+	Matrix* t5 = *t3 * t4;
 	delete t1, t2, t3, t4;
 
 	return t5;

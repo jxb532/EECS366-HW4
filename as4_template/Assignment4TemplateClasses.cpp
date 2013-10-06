@@ -369,7 +369,7 @@ void Camera::Perspective()
 	//ADD YOUR CODE HERE!!
 	// need to set ViewingMatrix[16] and ProjectionMatrix[16];
 	// I think we need to use ViewWidth, ViewHeight, FarPlane, NearPlane, ViewPlane
-	Matrix* perspective = perspectiveMatrix((NearPlane - FarPlane), - (ViewWidth / 2.0), (ViewWidth / 2), - (ViewHeight / 2), (ViewHeight / 2), NearPlane, FarPlane);
+	Matrix* perspective = perspectiveMatrix(ViewPlane, - (ViewWidth / 2.0), (ViewWidth / 2), - (ViewHeight / 2), (ViewHeight / 2), NearPlane, FarPlane);
 	float* persArray = perspective->toArray();
 
 	for(int i = 0; i < 16; i++) {
