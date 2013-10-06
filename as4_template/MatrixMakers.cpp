@@ -1,7 +1,6 @@
 /* Wes Rupert - wesrupert@outlook.com (wkr3)  *
  * Case Western Reserve University - EECS 366 */
 
-//#include "stdafx.h"
 #include "MatrixMakers.h"
 #include "Matrix.h"
 #include "Vector.h"
