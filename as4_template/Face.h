@@ -5,8 +5,8 @@
 
 #pragma once
 
-class Vector
+class Face
 {
 public:
-	float i, j, k;
+	int v1, v2, v3;
 };

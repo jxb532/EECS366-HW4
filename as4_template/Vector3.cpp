@@ -1,9 +1,11 @@
 /* Wes Rupert - wesrupert@outlook.com (wkr3)  *
- * Case Western Reserve University - EECS 366 */
+ * Josh Braun - jxb532@case.edu (jxb532)      *
+ * Case Western Reserve University - EECS 366 *
+ * 10/07/2013 - Assignment 4                  */
 
 #include <stdio.h>
 #include <math.h>
-#include "Vector.h"
+#include "Vector3.h"
 
 Vector3::Vector3(void) {
 	this->vector[0] = 0;

@@ -5,8 +5,11 @@
 
 #pragma once
 
-class Vector
+class Vertex
 {
 public:
-	float i, j, k;
+	Vertex();
+	Vertex(float _x, float _y, float _z);
+	void Normalize();
+	float x, y, z, h;
 };

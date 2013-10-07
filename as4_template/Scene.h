@@ -5,8 +5,12 @@
 
 #pragma once
 
-class Vector
+#include "Object.h"
+
+class Scene
 {
 public:
-	float i, j, k;
+	void Load(char* file);
+	Object* pObjectList;
+	int ObjectCount;
 };

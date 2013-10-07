@@ -1,5 +1,10 @@
+/* Wes Rupert - wesrupert@outlook.com (wkr3)  *
+ * Josh Braun - jxb532@case.edu (jxb532)      *
+ * Case Western Reserve University - EECS 366 *
+ * 10/07/2013 - Assignment 4                  */
+
 #include "Matrix.h"
-#include "Vector.h"
+#include "Vector3.h"
 
 Matrix* modelMatrix(Matrix* r, Vector3* p);
 Matrix* viewMatrix(Vector3* P, Vector3* N, Vector3* V);

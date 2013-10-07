@@ -1,5 +1,7 @@
-// Assignment4Template.cpp
-// Computer Graphics - EECS 366/466 - Spring 2006
+/* Wes Rupert - wesrupert@outlook.com (wkr3)  *
+ * Josh Braun - jxb532@case.edu (jxb532)      *
+ * Case Western Reserve University - EECS 366 *
+ * 10/07/2013 - Assignment 4                  */
 
 // Allow use of M_PI constant
 #define _USE_MATH_DEFINES
@@ -9,7 +11,8 @@
 #include <math.h>
 #include <iostream>
 #include "glut.h"
-#include "Assignment4TemplateClasses.h"
+#include "Camera.h"
+#include "Scene.h"
 
 using namespace std;
 
@@ -30,6 +33,16 @@ int WindowWidth = 300, WindowHeight = 300;
 Scene* pDisplayScene;
 Camera* pDisplayCamera;
 
+Vertex Transform(float* matrix, Vertex& point)
+{
+	Vertex temp;
+	temp.x = matrix[0]*point.x + matrix[4]*point.y + matrix[8]*point.z + matrix[12]*point.h;
+	temp.y = matrix[1]*point.x + matrix[5]*point.y + matrix[9]*point.z + matrix[13]*point.h;
+	temp.z = matrix[2]*point.x + matrix[6]*point.y + matrix[10]*point.z + matrix[14]*point.h;
+	temp.h = matrix[3]*point.x + matrix[7]*point.y + matrix[11]*point.z + matrix[15]*point.h;
+	return temp;
+
+}
 
 void DisplayFunc()
 {
