@@ -54,20 +54,17 @@ void DisplayFunc()
 	//gluOrtho2D(-1.1,1.1,-1.1,1.1);
 	gluOrtho2D(-1.0,1.0,-1.0,1.0);
 
-	if(PerspectiveMode)
-	{
+	if(PerspectiveMode) {
 		pDisplayCamera->Perspective();
-	}
-		
-	else
+	} else {
 		pDisplayCamera->Orthographic();
+	}
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	// draw world coordinate frames
-	if(ShowAxes)
-	{
+	if(ShowAxes) {
 		glLineWidth(3.0);
 		glBegin(GL_LINES);
 
@@ -95,16 +92,15 @@ void DisplayFunc()
 	}
 
 	// draw objects
-	for(int i = 0; i < pDisplayScene->ObjectCount; i++)
-	{
+	for(int i = 0; i < pDisplayScene->ObjectCount; i++) {
 		// Color the selected object yellow and others blue
-		if(i == SelectedObject)
+		if(i == SelectedObject) {
 			glColor3f(1, 1, 0);
-		else
+		} else {
 			glColor3f(0, 0, 1);
+		}
 		//  draw object faces
-		for(int j = 0; j < pDisplayScene->pObjectList[i].FaceCount; j++)
-		{
+		for(int j = 0; j < pDisplayScene->pObjectList[i].FaceCount; j++) {
 			input = new Vertex[3];
 			input[0] = pDisplayScene->pObjectList[i].pVertexList[pDisplayScene->pObjectList[i].pFaceList[j].v1];
 			input[1] = pDisplayScene->pObjectList[i].pVertexList[pDisplayScene->pObjectList[i].pFaceList[j].v2];
@@ -129,8 +125,7 @@ void DisplayFunc()
 		}
 
 		// Draw object coordinate frames
-		if(ShowAxes)
-		{
+		if(ShowAxes) {
 			glLineWidth(3.0);
 			glBegin(GL_LINES);
 
@@ -161,10 +156,54 @@ void DisplayFunc()
 			glLineWidth(1.0);
 		}
 
-		if(ShowBoundingBoxes)
-		{
+		if(ShowBoundingBoxes) {
 			//ADD YOUR CODE HERE: Draw the bounding boxes
+			for(int i = 0; i < pDisplayScene->ObjectCount; i++) {
+				if(i == SelectedObject) {
+					glColor3f(1, 0, 0);
+				} else {
+					glColor3f(0, 0, 1);
+				}
 
+				Vertex* boundingBox = pDisplayScene->pObjectList[i].pBoundingBox;
+
+				// drawing lines from one vertex to the next
+				Vertex connections[] = {
+					boundingBox[0], boundingBox[1],
+					boundingBox[1], boundingBox[2],
+					boundingBox[2], boundingBox[3],
+					boundingBox[3], boundingBox[0],
+					boundingBox[0], boundingBox[4],
+					boundingBox[1], boundingBox[5],
+					boundingBox[2], boundingBox[6],
+					boundingBox[3], boundingBox[7],
+					boundingBox[4], boundingBox[5],
+					boundingBox[5], boundingBox[6],
+					boundingBox[6], boundingBox[7],
+					boundingBox[7], boundingBox[4],
+				};
+
+				input = new Vertex[2];
+
+				for (int j = 0; j < 24; j += 2) {
+					input[0] = connections[j];
+					input[1] = connections[j + 1];
+
+					for (int k=0; k<2; k++){
+						temp	= Transform(pDisplayScene->pObjectList[i].ModelMatrix,input[k]);
+						temp2	= Transform(pDisplayCamera->ViewingMatrix,temp);
+						input[k]= Transform(pDisplayCamera->ProjectionMatrix,temp2);
+					}
+
+					glBegin(GL_LINES);
+					glVertex2f(input[0].x/input[0].h, input[0].y/input[0].h);
+					glVertex2f(input[1].x/input[1].h, input[1].y/input[1].h);
+					glEnd();
+				}
+
+				delete [] input;
+				input = NULL;
+			}
 		} 
 	}
 
