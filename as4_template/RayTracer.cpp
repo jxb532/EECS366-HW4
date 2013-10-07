@@ -3,11 +3,11 @@
         dest[0]=v1[1]*v2[2]-v1[2]*v2[1]; \
         dest[1]=v1[2]*v2[0]-v1[0]*v2[2]; \
         dest[2]=v1[0]*v2[1]-v1[1]*v2[0]; } while (false)
-#define DOT(v1,v2) (v1[0]*v2[0]+v1[1]*v2[1]+v1[2]*v2[2])
-#define SUB(dest,v1,v2) \
+#define DOT(v1,v2) (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2])
+#define SUB(dest,v1,v2) do { \
         dest[0]=v1[0]-v2[0]; \
         dest[1]=v1[1]-v2[1]; \
-        dest[2]=v1[2]-v2[2];
+        dest[2]=v1[2]-v2[2]; } while (false)
  
 int intersect_triangle(double orig[3], double dir[3], double vert0[3], double vert1[3], double vert2[3], double* t, double* u,double* v) {
     double edge1[3], edge2[3], tvec[3], pvec[3], qvec[3];
