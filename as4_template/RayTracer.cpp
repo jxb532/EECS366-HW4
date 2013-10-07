@@ -9,7 +9,7 @@
         dest[1]=v1[1]-v2[1]; \
         dest[2]=v1[2]-v2[2]; } while (false)
  
-int intersect_triangle(double orig[3], double dir[3], double vert0[3], double vert1[3], double vert2[3], double* t, double* u,double* v) {
+int intersect_triangle(double orig[3], double dir[3], double vert0[3], double vert1[3], double vert2[3], double* t, double* u, double* v) {
     double edge1[3], edge2[3], tvec[3], pvec[3], qvec[3];
     double det, inv_det;
 
