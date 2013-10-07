@@ -21,7 +21,7 @@ Vertex::Vertex(float _x, float _y, float _z)
 	x = _x;
 	y = _y;
 	z = _z;
-	h = sqrtf((x * x) + (y * y) + (z * z));
+	h = 1;
 }
 
 void Vertex::Normalize()
