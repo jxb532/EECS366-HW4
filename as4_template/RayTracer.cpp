@@ -1,3 +1,10 @@
+/* Wes Rupert - wesrupert@outlook.com (wkr3)  *
+ * Josh Braun - jxb532@case.edu (jxb532)      *
+ * Case Western Reserve University - EECS 366 *
+ * 10/07/2013 - Assignment 4                  */
+
+#include "RayTracer.h"
+
 #define EPSILON 0.000001
 #define CROSS(dest,v1,v2) do { \
         dest[0]=v1[1]*v2[2]-v1[2]*v2[1]; \
@@ -62,7 +69,7 @@ int intersect_triangle(double orig[3], double dir[3], double vert0[3], double ve
     SUB(tvec, orig, vert0);
      
     /* calculate U parameter and test bounds */
-    *u = DOT(tvec, pvec) * inv_dt;
+    *u = DOT(tvec, pvec) * inv_det;
     if (*v < 0.0 || *u + *v > 1.0)
         return 0;
      

@@ -81,6 +81,7 @@
     <ClCompile Include="MatrixMakers.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="RayTracer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="Vector3.cpp" />
@@ -88,6 +89,7 @@
   <ItemGroup>
     <ClInclude Include="Face.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="RayTracer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Vector.h" />

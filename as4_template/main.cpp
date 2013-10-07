@@ -13,6 +13,7 @@
 #include "glut.h"
 #include "Camera.h"
 #include "Scene.h"
+#include "RayTracer.h"
 
 using namespace std;
 
@@ -202,7 +203,7 @@ void DisplayFunc()
 					input[0] = connections[j];
 					input[1] = connections[j + 1];
 
-					for (int k=0; k<2; k++){
+					for (int k=0; k<2; k++) {
 						temp	= Transform(pDisplayScene->pObjectList[i].ModelMatrix,input[k]);
 						temp2	= Transform(pDisplayCamera->ViewingMatrix,temp);
 						input[k]= Transform(pDisplayCamera->ProjectionMatrix,temp2);
@@ -247,7 +248,64 @@ void MouseFunc(int button,int state,int x,int y)
 	{
 		// Select a new object with (x,y) 
 		//ADD YOUR CODE HERE: Select a new object by intersecting the selection ray
+		Vertex* input;
+		double t, u, v;
+		
+		double curT = DBL_MAX;
 
+		float xLoc = (MouseX / WindowWidth) * 2 - 1;
+		float yLoc = (MouseY / WindowHeight) * 2 - 1;
+
+		double orig[] = {xLoc, yLoc, -1};
+		double dir[] = {0, 0, 1};
+
+		for(int i = 0; i < pDisplayScene->ObjectCount; i++) {
+
+			Vertex* boundingBox = pDisplayScene->pObjectList[i].pBoundingBox;
+
+			Vertex connections[] = {
+				boundingBox[0], boundingBox[1], boundingBox[2],
+				boundingBox[0], boundingBox[2], boundingBox[3],
+				boundingBox[5], boundingBox[4], boundingBox[7],
+				boundingBox[5], boundingBox[7], boundingBox[6],
+				boundingBox[4], boundingBox[0], boundingBox[3],
+				boundingBox[4], boundingBox[3], boundingBox[7],
+				boundingBox[6], boundingBox[2], boundingBox[1],
+				boundingBox[6], boundingBox[1], boundingBox[5],
+				boundingBox[5], boundingBox[1], boundingBox[0],
+				boundingBox[5], boundingBox[0], boundingBox[4],
+				boundingBox[7], boundingBox[3], boundingBox[2],
+				boundingBox[7], boundingBox[2], boundingBox[6],
+			};
+
+			input = new Vertex[3];
+			Vertex temp;
+			Vertex temp2;
+			for (int j = 0; j < 36; j += 3) {
+				input[0] = connections[j];
+				input[1] = connections[j + 1];
+				input[2] = connections[j + 2];
+
+				for (int k=0; k<3; k++){
+					temp = Transform(pDisplayScene->pObjectList[i].ModelMatrix,input[k]);
+					temp2 = Transform(pDisplayCamera->ViewingMatrix,temp);
+					input[k]= Transform(pDisplayCamera->ProjectionMatrix,temp2);
+				}
+			
+				double v0[] = {input[0].x/input[0].h, input[0].y/input[0].h, input[0].z/input[0].h};
+				double v1[] = {input[1].x/input[1].h, input[1].y/input[1].h, input[1].z/input[1].h};
+				double v2[] = {input[2].x/input[2].h, input[2].y/input[2].h, input[2].z/input[2].h};
+				
+				if (intersect_triangle(orig, dir, v0, v1, v2, &t, &u, &v) && t < curT) {
+					SelectedObject = i;
+				}
+
+
+			}
+
+			delete [] input;
+			input = NULL;
+		}
 		glutPostRedisplay();
 	}
 }
@@ -354,22 +412,8 @@ void KeyboardFunc(unsigned char key, int x, int y)
 		PerspectiveMode = !PerspectiveMode;
 		if(PerspectiveMode) {
 			glutSetWindowTitle("Assignment 4 (Perspective)");
-
-			// XXX need to implement this manually
-			//glMatrixMode(GL_PROJECTION);
-			//glLoadIdentity();
-			//gluPerspective(60,(GLdouble) 1.0, 0.01, 10000);
-			//glMatrixMode(GL_MODELVIEW);
-			//glLoadIdentity();
 		} else {
 			glutSetWindowTitle("Assignment 4 (Orthogonal)");
-
-			// XXX need to implement this manually
-			//glMatrixMode(GL_PROJECTION);
-			//glLoadIdentity();
-			//glOrtho(-2.5,2.5,-2.5,2.5,-10000,10000);
-			//glMatrixMode(GL_MODELVIEW);
-			//glLoadIdentity();
 		}
 		break;
 	case 'Q':
