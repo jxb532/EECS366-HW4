@@ -70,7 +70,7 @@ int intersect_triangle(double orig[3], double dir[3], double vert0[3], double ve
      
     /* calculate U parameter and test bounds */
     *u = DOT(tvec, pvec) * inv_det;
-    if (*v < 0.0 || *u + *v > 1.0)
+    if (*u < 0.0 || *u > 1.0)
         return 0;
      
     /* prepare to test V parameter */

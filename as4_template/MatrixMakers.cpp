@@ -88,18 +88,17 @@ Matrix* perspectiveMatrix(Vector3 prp, Vector3 vp, float s, float t, float d) {
 
 Matrix* perspectiveMatrix(float d, float xMin, float xMax, float yMin, float yMax, float n, float f) {
 	
-	// FIXME? looking at my notes, I think 1a and 1b might be switched...
 	float per_1a[] = {
-		2 * d / (xMax - xMin), 0, 0, 0,
-		0, 2 * d / (yMax - yMin), 0, 0,
-		0, 0, 1, 0,
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		(xMax + xMin) / (2 * d), (yMax + yMin) / (2 * d), 1, 0,
 		0, 0, 0, 1
 	};
 
 	float per_1b[] = {
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		(xMax + xMin) / (2 * d), (yMax + yMin) / (2 * d), 1, 0,
+		(2 * d) / (xMax - xMin), 0, 0, 0,
+		0, (2 * d) / (yMax - yMin), 0, 0,
+		0, 0, 1, 0,
 		0, 0, 0, 1
 	};
 
@@ -107,18 +106,15 @@ Matrix* perspectiveMatrix(float d, float xMin, float xMax, float yMin, float yMa
 		1, 0, 0, 0,
 		0, 1, 0, 0,
 		0, 0, -(f + n) / (f - n), -1,
-		0, 0, -2 * f * n / (f - n), 0
+		0, 0, -(2 * f * n) / (f - n), 0
 	};
 
 	Matrix* t1 = new Matrix(4, 4, per_1a);
 	Matrix* t2 = new Matrix(4, 4, per_1b);
 	Matrix* t3 = new Matrix(4, 4, per_2);
 
-	// FIXME? Also, I think the order they are multiplied is per_2 * per_1b * per_1a
-	//Matrix* t4 = *t2 * t3;
-	//Matrix* t5 = *t1 * t4;
-	Matrix* t4 = *t1 * t2;
-	Matrix* t5 = *t3 * t4;
+	Matrix* t4 = *t3 * t2;
+	Matrix* t5 = *t4 * t1;
 	delete t1, t2, t3, t4;
 
 	return t5;

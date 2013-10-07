@@ -253,8 +253,8 @@ void MouseFunc(int button,int state,int x,int y)
 		
 		double curT = DBL_MAX;
 
-		float xLoc = (MouseX / WindowWidth) * 2 - 1;
-		float yLoc = (MouseY / WindowHeight) * 2 - 1;
+		float xLoc = ((float)MouseX / (float)WindowWidth) * 2 - 1;
+		float yLoc = ((float)(WindowHeight - MouseY) / (float)WindowHeight) * 2 - 1;
 
 		double orig[] = {xLoc, yLoc, -1};
 		double dir[] = {0, 0, 1};
@@ -296,11 +296,14 @@ void MouseFunc(int button,int state,int x,int y)
 				double v1[] = {input[1].x/input[1].h, input[1].y/input[1].h, input[1].z/input[1].h};
 				double v2[] = {input[2].x/input[2].h, input[2].y/input[2].h, input[2].z/input[2].h};
 				
-				if (intersect_triangle(orig, dir, v0, v1, v2, &t, &u, &v) && t < curT) {
+				int result = intersect_triangle(orig, dir, v0, v1, v2, &t, &u, &v);
+
+				if (result && t < curT) {
+					curT = t;
 					SelectedObject = i;
 				}
 
-
+				t = u = v = 0.0;
 			}
 
 			delete [] input;
